@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy 1st Anniversary, My Love!</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- JS Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- STEP 1: ENVELOPE / LETTER SCREEN -->
+  <div id="screen-envelope" class="screen active">
+    <div class="envelope-card">
+      <h2>A Special Letter For You</h2>
+      <p id="instruction-text">Press the heart to open your letter ❤️</p>
+      
+      <div class="heart-btn" id="heartBtn">❤️</div>
+
+      <div id="anniversaryMessage" class="hidden-message">
+        <h1>I love you Darling!</h1>
+        <h3>Happy One Year Anniversary! ❤️✨</h3>
+        <p>You mean the world to me, and today is all about celebrating us.</p>
+        <button id="nextBtn" class="primary-btn">Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: FIVE CARDS SELECTION SCREEN -->
+  <div id="screen-cards" class="screen">
+    <h2>Choose a Surprise Card 💕</h2>
+    <div class="cards-container">
+      
+      <!-- Card 1 -->
+      <div class="card" onclick="openGame('wordsearch')">
+        <div class="card-icon">🔍</div>
+        <h3>Card 1</h3>
+        <p>A Word Search Game</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" onclick="openGame('card2')">
+        <div class="card-icon">✨</div>
+        <h3>Card 2</h3>
+        <p>A Special Challenge</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card" onclick="openGame('heartvideo')">
+        <div class="card-icon">💖</div>
+        <h3>Card 3</h3>
+        <p>A Special Video Surprise</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card" onclick="openGame('photobooth')">
+        <div class="card-icon">📸</div>
+        <h3>Card 4</h3>
+        <p>Interactive Photobooth</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card" onclick="openGame('matching')">
+        <div class="card-icon">🃏</div>
+        <h3>Card 5</h3>
+        <p>Memory Matching Cards</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL / GAME SCREENS -->
+  
+  <!-- Modal 1: Word Search -->
+  <div id="modal-wordsearch" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕ Back to Cards</button>
+      <h2>Find Our Special Words 🔎</h2>
+      <p>Find: <strong>AMAZING BOYFRIEND</strong>, <strong>CARING</strong>, <strong>ONE YEAR</strong>, <strong>ALWAYS ,FOREVER</strong></p>
+      
+      <div id="wordsearch-grid" class="grid-container"></div>
+      
+      <div id="ws-reward" class="reward-box hidden">
+        🎉 You found all the words! 🎉
+        <p class="love-paragraph">
+          To my darling, you truly are the most amazing boyfriend in the whole wide world. Thank you for being so caring, gentle, and loving to me every single day. Completing one year with you feels like a dream, and I want you to know that my heart belongs to you always and forever. Here is to 365 days of endless smiles, warm hugs, and pure happiness!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Connect Dots -> Quiz -> Scroll Letter -->
+  <div id="modal-card2" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕ Back to Cards</button>
+      
+      <!-- STAGE 1: Connect the Dots -->
+      <div id="dots-stage">
+        <h2>Connect the Dots ❤️</h2>
+        <p>Click the numbered dots in order (1 to 5) to reveal the heart!</p>
+        <div id="dots-container" class="dots-box">
+          <canvas id="dotsCanvas" width="300" height="260"></canvas>
+        </div>
+      </div>
+
+      <!-- STAGE 2: Quiz Stage -->
+      <div id="quiz-stage" class="hidden">
+        <h2>Fill-in-the-Blanks Quiz 📝</h2>
+        <p class="quiz-sub">How well do you know us, darling?</p>
+        
+        <div class="quiz-container">
+          <div class="quiz-group">
+            <label>1. My favorite color is <input type="text" id="q1" placeholder="Answer..."></label>
+          </div>
+
+          <div class="quiz-group">
+            <label>2. The day we met was <input type="text" id="q2" placeholder="DD/MM/YYYY"></label>
+          </div>
+
+          <div class="quiz-group">
+            <label>3. You're my <input type="text" id="q3" placeholder="Answer..."></label>
+          </div>
+
+          <div class="quiz-group">
+            <label>4. My favorite place to be is in your <input type="text" id="q4" placeholder="Answer..."></label>
+          </div>
+
+          <div class="quiz-group">
+            <label>5. I love you to the moon and <input type="text" id="q5" placeholder="Answer..."></label>
+          </div>
+
+          <button id="submitQuizBtn" class="primary-btn" onclick="checkQuizAnswers()">Submit Answers ✨</button>
+          <p id="quizFeedback" class="quiz-feedback"></p>
+        </div>
+      </div>
+
+      <!-- STAGE 3: Vintage Scroll Essay -->
+      <div id="scroll-stage" class="hidden">
+        <h2 class="congrats-title">🎉 Congratulations Darling! 🎉</h2>
+        
+        <div class="vintage-scroll">
+          <div class="scroll-top">📜</div>
+          <h3>To My Dearest Darling</h3>
+          <p class="scroll-paragraph">
+            Happy One Year Anniversary, my love! Looking back over these past 365 days, my heart is overflowing with gratitude and unconditional love for you. From the very first day we met on September 22nd, you brought a warmth and light into my life that I never knew I was missing. You are my absolute favorite color in a world that can sometimes feel gray, my safe haven, and my best friend.
+          </p>
+          <p class="scroll-paragraph">
+            Thank you for every laugh, every tight hug, every sweet gesture, and every tender moment we’ve shared. Being loved by you is the greatest gift I could ever ask for. You truly are my soulmate, and choosing you every single day is the easiest decision I will ever make. Here’s to our first milestone of many—I love you always and forever, my darling!
+          </p>
+          <div class="scroll-signature">Forever Yours ❤️</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal 3: Growing Heart & Video -->
+  <div id="modal-heartvideo" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕ Back to Cards</button>
+      
+      <!-- Heart Stage -->
+      <div id="heart-stage">
+        <h2>Keep Clicking the Heart! ❤️️</h2>
+        <p>Give it love to fill it up!</p>
+        <div id="growingHeart" class="growing-heart-btn">💖</div>
+        <p id="click-counter-text">Clicks: <span id="clickCount">0</span> / 10</p>
+      </div>
+
+      <!-- Video & Paragraph Stage -->
+      <div id="video-stage" class="hidden">
+        <h2>Our Special Story 🎥❤️</h2>
+        
+        <div class="video-container">
+          <video id="anniversaryVideo" controls width="100%" style="border-radius: 12px; margin-top: 15px;">
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="marriage-box">
+          <h3>Forever & Always 💍</h3>
+          <p class="love-paragraph">
+            My dearest darling, walking through life with you has been the greatest adventure of my heart. As we celebrate our one year anniversary today, my heart is filled with so much excitement for our future. I cannot wait for the day we stand together and promise forever to each other—to grow old together, build our dream home, share a million more laughs, and love each other through every chapter of life. You are my soulmate, my best friend, and my forever love.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal 4: Interactive Camera Photobooth -->
+  <div id="modal-photobooth" class="modal">
+    <div class="flash-overlay" id="flashOverlay"></div>
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕ Back to Cards</button>
+      <h2>Our Memory Photobooth 📸</h2>
+      <p>Click the camera button to snap our memory photos!</p>
+      
+      <div class="camera-btn-wrapper">
+        <button id="snapPhotoBtn" class="camera-btn">📷 Snap Photo (<span id="photoCountText">0</span>/3)</button>
+      </div>
+
+      <div id="cameraCountdown" class="countdown-text"></div>
+
+      <!-- Photobooth Strip -->
+      <div class="photobooth-strip">
+        <div class="photo-frame hidden" id="frame1"><img src="photo1.jpeg" alt="Us 1"></div>
+        <div class="photo-frame hidden" id="frame2"><img src="photo2.jpeg" alt="Us 2"></div>
+        <div class="photo-frame hidden" id="frame3"><img src="photo3.jpeg" alt="Us 3"></div>
+        <div class="strip-header hidden" id="stripHeader">1 YEAR TOGETHER ❤️ FOREVER TO GO</div>
+      </div>
+
+      <div id="pb-reward" class="reward-box hidden">
+        ✨ Our Memories Captured! ✨
+        <p class="love-paragraph">
+          Every picture with you tells a story of pure happiness. Thank you for filling my life with sweet memories, endless smiles, and everlasting love. I can't wait to fill a million more photobooth strips with you!
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal 5: Memory Matching Game -->
+  <div id="modal-matching" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕ Back to Cards</button>
+
+      <!-- STAGE 1: Card Deck Game -->
+      <div id="match-deck-stage">
+        <h2>Match Our Love Cards 🃏</h2>
+        <p>Find all matching pairs to unlock a secret message!</p>
+        <div id="matchGrid" class="match-grid"></div>
+      </div>
+
+      <!-- STAGE 2: Old Computer Terminal Screen -->
+      <div id="terminal-stage" class="hidden">
+        <div class="retro-screen">
+          <div class="terminal-text" id="terminalText"></div>
+        </div>
+      </div>
+
+      <!-- STAGE 3: 5 Tap-to-Flip Photo Cards -->
+      <div id="flip-photos-stage" class="hidden">
+        <h2>Tap Each Photo to Reveal My Heart 💖</h2>
+        <p class="sub-tap">Click a picture to flip it over!</p>
+        
+        <div class="photo-cards-container">
+          
+          <!-- Photo 1 -->
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="Photo4.jpeg" alt="Memory 1">
+                <span class="tap-hint">Tap to flip ✨</span>
+              </div>
+              <div class="flip-card-back">
+                <h4>My Safe Place ❤️</h4>
+                <p>From the moment I met you, your arms became my favorite refuge. Loving you is as natural as breathing.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo 2 -->
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="Photo5.jpeg" alt="Memory 2">
+                <span class="tap-hint">Tap to flip ✨</span>
+              </div>
+              <div class="flip-card-back">
+                <h4>Your Sweet Smile 😊</h4>
+                <p>Your smile brightens even my darkest days, darling. Every single laugh we share is saved in my heart forever.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo 3 -->
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="Photo6.jpeg" alt="Memory 3">
+                <span class="tap-hint">Tap to flip ✨</span>
+              </div>
+              <div class="flip-card-back">
+                <h4>My Whole Heart 💖</h4>
+                <p>365 days of endless love, and I still fall deeper for you every time I look into your eyes, Mihir.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo 4 -->
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="Photo7.jpeg" alt="Memory 4">
+                <span class="tap-hint">Tap to flip ✨</span>
+              </div>
+              <div class="flip-card-back">
+                <h4>Endless Adventures 🗺️</h4>
+                <p>With you, every simple outing becomes a unforgettable memory. Life is so beautiful with you by my side.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo 5 -->
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="Photo8.jpeg" alt="Memory 5">
+                <span class="tap-hint">Tap to flip ✨</span>
+              </div>
+              <div class="flip-card-back">
+                <h4>Forever & Always 💍</h4>
+                <p>One year down, forever to go. You are my soulmate, my best friend, and my whole world, darling.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

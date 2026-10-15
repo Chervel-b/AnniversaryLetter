@@ -1,0 +1,571 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Screen visibility */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Envelope Card */
+.envelope-card {
+  background: white;
+  padding: 40px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.envelope-card h2 {
+  color: #d63384;
+  margin-bottom: 10px;
+}
+
+.heart-btn {
+  font-size: 80px;
+  cursor: pointer;
+  margin: 25px 0;
+  transition: transform 0.2s ease, filter 0.2s;
+  user-select: none;
+  display: inline-block;
+}
+
+.heart-btn:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px #ff4d6d);
+}
+
+.hidden-message {
+  display: none;
+  margin-top: 20px;
+  animation: popIn 0.5s ease-out forwards;
+}
+
+.hidden-message h1 {
+  color: #ff4d6d;
+  font-size: 2.2rem;
+}
+
+.hidden-message h3 {
+  color: #c9184a;
+  margin: 10px 0;
+}
+
+.primary-btn {
+  background-color: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: #c9184a;
+}
+
+/* Cards Screen */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(255, 77, 109, 0.3);
+}
+
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px; left: 15px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Word Search Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin: 20px auto;
+  max-width: 350px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  background: #fff0f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell.selected {
+  background: #ff758f;
+  color: white;
+}
+
+.cell.found {
+  background: #38b000;
+  color: white;
+}
+
+/* Connect Dots Canvas */
+.dots-box {
+  background: #fff0f3;
+  border: 2px dashed #ff4d6d;
+  border-radius: 15px;
+  margin: 20px auto;
+  width: 300px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Quiz Styling */
+.quiz-container {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.quiz-sub {
+  color: #ff4d6d;
+  font-weight: bold;
+}
+
+.quiz-group {
+  margin-bottom: 15px;
+}
+
+.quiz-group label {
+  font-size: 0.95rem;
+  color: #333;
+  display: block;
+  font-weight: 600;
+}
+
+.quiz-group input {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  border: 2px solid #ffccd5;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.quiz-group input:focus {
+  border-color: #ff4d6d;
+}
+
+.quiz-feedback {
+  margin-top: 10px;
+  color: #d63384;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Olden Style Scroll Letter */
+.congrats-title {
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+.vintage-scroll {
+  background: #fdf6e2;
+  border: 3px double #b5838d;
+  border-radius: 10px;
+  padding: 25px 20px;
+  box-shadow: inset 0 0 15px rgba(181, 131, 141, 0.3), 0 8px 20px rgba(0,0,0,0.15);
+  font-family: 'Georgia', serif;
+  text-align: justify;
+  position: relative;
+  margin-top: 10px;
+}
+
+.scroll-top {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.vintage-scroll h3 {
+  text-align: center;
+  font-family: 'Georgia', serif;
+  color: #6b2d5c;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.scroll-paragraph {
+  color: #4a2810;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.scroll-signature {
+  text-align: right;
+  font-style: italic;
+  font-weight: bold;
+  color: #6b2d5c;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+/* Growing Heart & Video Styling */
+.growing-heart-btn {
+  font-size: 60px;
+  cursor: pointer;
+  margin: 30px auto;
+  display: inline-block;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.growing-heart-btn:hover {
+  filter: drop-shadow(0 0 12px #ff4d6d);
+}
+
+#click-counter-text {
+  font-weight: bold;
+  color: #ff4d6d;
+  font-size: 1.1rem;
+}
+
+.video-container {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  margin: 15px 0;
+}
+
+/* Photobooth Styling */
+.camera-btn-wrapper {
+  margin: 15px 0;
+}
+
+.camera-btn {
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.camera-btn:hover {
+  background: #c9184a;
+  transform: scale(1.05);
+}
+
+.camera-btn:disabled {
+  background: #cccccc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.countdown-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff4d6d;
+  height: 35px;
+}
+
+.flash-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.15s ease-out;
+}
+
+.flash-overlay.flash {
+  opacity: 1;
+}
+
+.photobooth-strip {
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+  margin: 15px auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  min-height: 100px;
+}
+
+.photo-frame {
+  background: #fff;
+  padding: 8px 8px 15px 8px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  animation: popIn 0.5s ease-out forwards;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.strip-header {
+  color: white;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+/* Card Matching Game Grid */
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 320px;
+}
+
+.m-card {
+  aspect-ratio: 1;
+  background: #ffccd5;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.3s ease, background 0.3s;
+}
+
+.m-card.flipped {
+  background: #fff;
+  border: 2px solid #ff4d6d;
+}
+
+.m-card.matched {
+  background: #c8e6c9;
+  cursor: default;
+  border: 2px solid #4caf50;
+}
+
+/* Retro Computer Terminal */
+.retro-screen {
+  background: #0d0d0d;
+  border: 4px solid #333;
+  border-radius: 10px;
+  padding: 30px 20px;
+  margin: 20px auto;
+  box-shadow: inset 0 0 10px #00ff66;
+  min-height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.terminal-text {
+  color: #00ff66;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.5;
+  text-shadow: 0 0 8px #00ff66;
+}
+
+/* 3D Flip Photo Cards */
+.sub-tap {
+  color: #ff4d6d;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.photo-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 260px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tap-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+
+.flip-card-back {
+  background: #fff0f3;
+  color: #590d22;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border: 2px dashed #ff4d6d;
+}
+
+.flip-card-back h4 {
+  color: #d63384;
+  margin-bottom: 8px;
+}
+
+.flip-card-back p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Paragraph Box */
+.reward-box, .marriage-box {
+  background: #fff0f3;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  border: 2px dashed #ff4d6d;
+}
+
+.love-paragraph {
+  color: #590d22;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-top: 10px;
+  text-align: justify;
+}
+
+.hidden { display: none; }
+
+@keyframes popIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
